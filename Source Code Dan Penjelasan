@@ -1,0 +1,26 @@
+from gpio import * //GPIO pin yang digunakan untuk membaca input dan mengontrol output berdasarkan kondisi yang berbeda sesuai dengan program yang dibuat
+from time import * //untuk 
+
+def handleSensorData():
+	value = digitalRead(0) // baca pin 0
+	if value == 0:
+		customWrite(2, '0')
+		customWrite(1, '0')
+		digitalWrite(1, LOW) //matikan pin 1
+		print("Tidak ada gerakan") // maka akan menghasilkan, jika tidak ada gerakan apapun maka lampu tidak akan menyala dan gerbang tidak akan terbuka
+	else:
+		customWrite(2, '1')
+		customWrite(1, '1')
+		digitalWrite(1, HIGH) // nyala pin satu atau nyala lampu itu bertanda ada gerakan
+		print("Ada gerakan")
+		print("Garansi Terbuka")
+		print("Lampu Menyala")
+		
+def main():
+	add_event_detect(0, handleSensorData)
+	
+	while True:
+		delay(1000) // jeda untuk gerakan saat didekatkan sensor
+		
+if __name__ == "__main__":
+	main()
